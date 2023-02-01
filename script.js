@@ -6,15 +6,29 @@ fetch('https://api.tarkov.dev/graphql', {
     'Accept': 'application/json',
   },
   body: JSON.stringify({query: `{
-    items(name: "m855a1") {
+    items {
         id
         name
-        shortName
+        lastLowPrice
+        avg24hPrice
+        basePrice
+        image8xLink
+        sellFor {
+            priceRUB
+            price
+            source
+            currency
+        }
     }
 }`})
 })
   .then(r => r.json())
-  .then(data => console.log('data returned:', data))
+  .then(data => 
+    
+    
+    console.log('data returned:', data)
+    
+    )
   .catch()
   ;
 };
