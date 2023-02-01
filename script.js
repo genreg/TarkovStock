@@ -1,3 +1,4 @@
+window.onload = function() {
 fetch('https://api.tarkov.dev/graphql', {
   method: 'POST',
   headers: {
@@ -13,4 +14,7 @@ fetch('https://api.tarkov.dev/graphql', {
 }`})
 })
   .then(r => r.json())
-  .then(data => console.log('data returned:', data));
+  .then(data => console.log('data returned:', data))
+  .catch()
+  ;
+};
