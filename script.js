@@ -51,7 +51,7 @@ window.onload = function() {
       highestSource = item.sellFor[i].source;
     }
   }
-  if (highestPriceRUB) {
+  if (highestPriceRUB && lowestPriceRUB && averagePriceRUB && picture) {
     console.log(itemName, lowestPriceRUB, averagePriceRUB, picture, highestPriceRUB, highestSource);
   }
       });
