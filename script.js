@@ -56,17 +56,55 @@ window.onload = function () {
             highestSource = item.sellFor[i].source;
           }
         }
-        if (highestDifference >= 0) {
-          console.log(itemName, lowestPriceRUB, averagePriceRUB, picture, highestPriceRUB, highestSource, highestDifference);
+        profit = highestPriceRUB - lowestPriceRUB;
+        if (profit >= 0) {
+
 
           if (highestPriceRUB && lowestPriceRUB && averagePriceRUB && picture) {
-            console.log(itemName, lowestPriceRUB, averagePriceRUB, picture, highestPriceRUB, highestSource);
+
+            console.log(profit, itemName, lowestPriceRUB, averagePriceRUB, picture, highestPriceRUB, highestSource);
+
           }
         }
       });
+
+
+
+
+      tarkovItems.forEach(item => {
+
+        let itemName = item.name;
+        let highestPriceRUB = 0;
+        let lowestPriceRUB = item.lastLowPrice;
+        let averagePriceRUB = item.avg24hPrice;
+        let picture = item.image8xLink;
+        let highestSource;
+        let profit = 0;
+
+        for (let i = 0; i < item.sellFor.length; i++) {
+          if (item.sellFor[i].priceRUB > highestPriceRUB) {
+            highestPriceRUB = item.sellFor[i].priceRUB;
+            highestSource = item.sellFor[i].source;
+          }
+        }
+        profit = highestPriceRUB - lowestPriceRUB;
+        if (profit >= 0) {
+
+
+          if (highestPriceRUB && lowestPriceRUB && averagePriceRUB && picture) {
+
+            console.log(profit, itemName, lowestPriceRUB, averagePriceRUB, picture, highestPriceRUB, highestSource);
+
+          }
+        }
+      });
+
+
+
+
+
 
     })
     .catch(error => console.log(error));
 
 };
-
