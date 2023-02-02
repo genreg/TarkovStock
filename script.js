@@ -1,13 +1,14 @@
 let tarkovItems;
 
-window.onload = function() {
+window.onload = function () {
   fetch('https://api.tarkov.dev/graphql', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     },
-    body: JSON.stringify({query: `{
+    body: JSON.stringify({
+      query: `{
       items {
           id
           name
@@ -29,8 +30,8 @@ window.onload = function() {
     .then(data => {
       tarkovItems = data.data.items;
       console.log(tarkovItems);
-      
-      
+
+
       tarkovItems.forEach(item => {
         item.sellFor = item.sellFor.filter(sellForItem => sellForItem.source !== 'fleaMarket');
       });
@@ -45,18 +46,23 @@ window.onload = function() {
         let highestPriceRUB = 0;
         let lowestPriceRUB = item.lastLowPrice;
         let averagePriceRUB = item.avg24hPrice;
-        let picture =  item.image8xLink;
+        let picture = item.image8xLink;
         let highestSource;
+        let profit = 0;
 
-  for (let i = 0; i < item.sellFor.length; i++) {
-    if (item.sellFor[i].priceRUB > highestPriceRUB) {
-      highestPriceRUB = item.sellFor[i].priceRUB;
-      highestSource = item.sellFor[i].source;
-    }
-  }
-  if (highestPriceRUB && lowestPriceRUB && averagePriceRUB && picture) {
-    console.log(itemName, lowestPriceRUB, averagePriceRUB, picture, highestPriceRUB, highestSource);
-  }
+        for (let i = 0; i < item.sellFor.length; i++) {
+          if (item.sellFor[i].priceRUB > highestPriceRUB) {
+            highestPriceRUB = item.sellFor[i].priceRUB;
+            highestSource = item.sellFor[i].source;
+          }
+        }
+        if (highestDifference >= 0) {
+          console.log(itemName, lowestPriceRUB, averagePriceRUB, picture, highestPriceRUB, highestSource, highestDifference);
+
+          if (highestPriceRUB && lowestPriceRUB && averagePriceRUB && picture) {
+            console.log(itemName, lowestPriceRUB, averagePriceRUB, picture, highestPriceRUB, highestSource);
+          }
+        }
       });
 
     })
