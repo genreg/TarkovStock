@@ -35,6 +35,13 @@ window.onload = function() {
         item.sellFor = item.sellFor.filter(sellForItem => sellForItem.source !== 'fleaMarket');
       });
       console.log(tarkovItems);
+
+      tarkovItems.forEach(item => {
+        if (item.sellFor[0] && item.sellFor[0].priceRUB) {
+          console.log(item.sellFor[0].priceRUB);
+        }
+      });
+
     })
     .catch(error => console.log(error));
 
