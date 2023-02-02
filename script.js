@@ -37,6 +37,10 @@ window.onload = function() {
       console.log(tarkovItems);
 
       tarkovItems.forEach(item => {
+
+        let highestPriceRUB = 0;
+        let highestSource;
+        
         if (item.sellFor[0] && item.sellFor[0].priceRUB) {
           console.log(item.sellFor[0].priceRUB);
         }
@@ -49,4 +53,3 @@ window.onload = function() {
 
 };
 
-// Use the tarkovItems variable outside of the function
