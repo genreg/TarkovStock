@@ -34,7 +34,10 @@ window.onload = function() {
       tarkovItems.forEach(item => {
         item.sellFor = item.sellFor.filter(sellForItem => sellForItem.source !== 'fleaMarket');
       });
-      console.log(tarkovItems);
+
+      console.log(tarkovItems.sort((a, b) => {
+        return b.lastLowPrice - a.lastLowPrice;
+      }));
 
       tarkovItems.forEach(item => {
 
