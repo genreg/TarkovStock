@@ -1,13 +1,14 @@
 let tarkovItems;
 
-window.onload = function() {
+window.onload = function () {
   fetch('https://api.tarkov.dev/graphql', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     },
-    body: JSON.stringify({query: `{
+    body: JSON.stringify({
+      query: `{
       items {
           id
           name
@@ -29,17 +30,64 @@ window.onload = function() {
     .then(data => {
       tarkovItems = data.data.items;
       console.log(tarkovItems);
-      
-      
+
+
       tarkovItems.forEach(item => {
         item.sellFor = item.sellFor.filter(sellForItem => sellForItem.source !== 'fleaMarket');
       });
-      console.log(tarkovItems);
+
+      console.log(tarkovItems.sort((a, b) => {
+        return b.lastLowPrice - a.lastLowPrice;
+      }));
+
+      tarkovItems.forEach(item => {
+
+        let itemName = item.name;
+        let highestPriceRUB = 0;
+        let lowestPriceRUB = item.lastLowPrice;
+        let averagePriceRUB = item.avg24hPrice;
+        let picture = item.image8xLink;
+        let highestSource;
+        let profit = 0;
+
+        for (let i = 0; i < item.sellFor.length; i++) {
+          if (item.sellFor[i].priceRUB > highestPriceRUB) {
+            highestPriceRUB = item.sellFor[i].priceRUB;
+            highestSource = item.sellFor[i].source;
+          }
+        }
+        profit = highestPriceRUB - lowestPriceRUB;
+        item.profit = profit;
+      });
+      tarkovItems.sort((a, b) => b.profit - a.profit);
+      
+
+      const filteredItems = tarkovItems.filter(item => item.profit >= 100);
+      
+      filteredItems.forEach(item => {
+
+        let itemName = item.name;
+        let highestPriceRUB = 0;
+        let lowestPriceRUB = item.lastLowPrice;
+        let averagePriceRUB = item.avg24hPrice;
+        let picture = item.image8xLink;
+        let highestSource;
+        let profit = item.profit;
+
+        for (let i = 0; i < item.sellFor.length; i++) {
+          if (item.sellFor[i].priceRUB > highestPriceRUB) {
+            highestPriceRUB = item.sellFor[i].priceRUB;
+            highestSource = item.sellFor[i].source;
+          }
+        }
+
+      
+        if (highestPriceRUB && lowestPriceRUB && averagePriceRUB && picture) {
+        console.log("Profit: " + profit + " Name: " + itemName);
+        }
+      });
+
     })
     .catch(error => console.log(error));
 
-    
-
 };
-
-// Use the tarkovItems variable outside of the function
