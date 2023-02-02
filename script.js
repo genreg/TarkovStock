@@ -38,18 +38,26 @@ window.onload = function() {
 
       tarkovItems.forEach(item => {
 
+        let itemName = item.name;
         let highestPriceRUB = 0;
+        let lowestPriceRUB = item.lastLowPrice;
+        let averagePriceRUB = item.avg24hPrice;
+        let picture =  item.image8xLink;
         let highestSource;
-        
-        if (item.sellFor[0] && item.sellFor[0].priceRUB) {
-          console.log(item.sellFor[0].priceRUB);
-        }
+
+  for (let i = 0; i < item.sellFor.length; i++) {
+    if (item.sellFor[i].priceRUB > highestPriceRUB) {
+      highestPriceRUB = item.sellFor[i].priceRUB;
+      highestSource = item.sellFor[i].source;
+    }
+  }
+  if (highestPriceRUB) {
+    console.log(itemName, lowestPriceRUB, averagePriceRUB, picture, highestPriceRUB, highestSource);
+  }
       });
 
     })
     .catch(error => console.log(error));
-
-    
 
 };
 
