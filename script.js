@@ -56,10 +56,8 @@ window.onload = function () {
             highestSource = item.sellFor[i].source;
           }
         }
-        item.profit = profit;
         profit = highestPriceRUB - lowestPriceRUB;
-
-        })
+        item.profit = profit;
       });
       tarkovItems.sort((a, b) => b.profit - a.profit);
       
@@ -74,6 +72,7 @@ window.onload = function () {
         let averagePriceRUB = item.avg24hPrice;
         let picture = item.image8xLink;
         let highestSource;
+        let profit = item.profit;
 
         for (let i = 0; i < item.sellFor.length; i++) {
           if (item.sellFor[i].priceRUB > highestPriceRUB) {
@@ -84,7 +83,7 @@ window.onload = function () {
 
       
         if (highestPriceRUB && lowestPriceRUB && averagePriceRUB && picture) {
-        console.log("Profit: " + item.profit + " Name: " + item.name);
+        console.log("Profit: " + profit + " Name: " + itemName);
         }
       });
 
