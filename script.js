@@ -31,10 +31,15 @@ window.onload = function() {
       console.log(tarkovItems);
       
       
-      const sellTo = tarkovItems[0].name
-      console.log(sellTo);
+      tarkovItems.forEach(item => {
+        item.sellFor = item.sellFor.filter(sellForItem => sellForItem.source !== 'fleaMarket');
+      });
+      console.log(tarkovItems);
     })
     .catch(error => console.log(error));
+
+    
+
 };
 
 // Use the tarkovItems variable outside of the function
