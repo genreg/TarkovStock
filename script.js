@@ -58,17 +58,8 @@ window.onload = function () {
         }
         item.profit = profit;
         profit = highestPriceRUB - lowestPriceRUB;
-        if (profit >= 0) {
 
-
-          if (highestPriceRUB && lowestPriceRUB && averagePriceRUB && picture) {
-
-            console.log(profit, itemName, lowestPriceRUB, averagePriceRUB, picture, highestPriceRUB, highestSource);
-
-          }
-
-          
-        }
+        })
       });
       tarkovItems.sort((a, b) => b.profit - a.profit);
       
