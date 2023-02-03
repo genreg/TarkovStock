@@ -2,6 +2,22 @@ let tarkovItems;
 const output = document.getElementById("output");
 let row = 0;
 let html = "";
+
+
+function settimer() {
+  var timer = duration, minutes, seconds;
+}
+
+
+
+
+
+
+
+
+
+
+
 window.onload = function () {
   fetch('https://api.tarkov.dev/graphql', {
     method: 'POST',
