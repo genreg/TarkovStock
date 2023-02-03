@@ -3,7 +3,7 @@
     justify-content: center;
   }
 
-.item {
+td {
     text-transform: uppercase;
     text-align: center;
     margin: 10px;
