@@ -69,12 +69,12 @@ let count = 0;
         html += `
 
         <div class="item-container">
-           <div class="item">${sortedItems[count].fleaToTraderProfit}
+           <div class="item">$${sortedItems[count].fleaToTraderProfit}
         ${sortedItems[count].name}
         ${sortedItems[count].sellingSource}
-        ${sortedItems[count].fleaPrice}
-        ${sortedItems[count].traderSellPrice}
-        <img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}"  width="100" height="100"/>
+        $${sortedItems[count].fleaPrice}
+        $${sortedItems[count].traderSellPrice}
+        <img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}"   height="50" style="vertical-align: middle;/>
         
         </div></div><br>`
             
