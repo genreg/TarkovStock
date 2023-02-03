@@ -62,68 +62,75 @@ window.onload = function () {
       const sortedItems = profitability.sort(function (a, b) {
         return parseFloat(b.fleaToTraderProfit) - parseFloat(a.fleaToTraderProfit);
       });
-
+      
       let count = 0;
-
-      html += `
+      
+      let html = `
       <table class="item-table">
-<tr>
-  <th>PROFIT</th>
-  <th>SELL TO</th>
-  <th>FLEA PRICE</th>
-  <th>SELL PRICE</th>
-  <th>NAME</th>
-  <th>IMAGE</th>
-</tr>`
+        <tr>
+          <th>PROFIT</th>
+          <th>SELL TO</th>
+          <th>FLEA PRICE</th>
+          <th>SELL PRICE</th>
+          <th>NAME</th>
+          <th>IMAGE</th>
+        </tr>`;
+      
       for (let i = 0; i < 10; i++) {
-        html += `<tr>
-          <td>${sortedItems[count].fleaToTraderProfit}</td>
-          <td>${sortedItems[count].sellingSource}</td>
-          <td>${sortedItems[count].fleaPrice}</td>
-          <td>${sortedItems[count].traderSellPrice}</td>
-          <td>${sortedItems[count].name}</td>
-          <td><img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}"  height="50" /></td>
-          </tr>
-        `
-
-        count++
-
-
-      }
-
-      const loadMoreButton = document.getElementById("load");
-
-      loadMoreButton.addEventListener("click", function () {
-
-        
+        if (count === sortedItems.length) {
+          break;
+        }
+      
         html += `
-        <table class="item-table">`
-        
+          <tr>
+            <td>${sortedItems[count].fleaToTraderProfit}</td>
+            <td>${sortedItems[count].sellingSource}</td>
+            <td>${sortedItems[count].fleaPrice}</td>
+            <td>${sortedItems[count].traderSellPrice}</td>
+            <td>${sortedItems[count].name}</td>
+            <td><img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}" height="50" /></td>
+          </tr>
+        `;
+      
+        count++;
+      }
+      
+      html += `
+      </table>`;
+      
+      const output = document.getElementById("output");
+      output.innerHTML = html;
+      
+      const loadMoreButton = document.getElementById("load");
+      
+      loadMoreButton.addEventListener("click", function () {
+        let newHtml = ``;
+      
         for (let i = 0; i < 10; i++) {
           if (count === sortedItems.length) {
             break;
           }
-          html += ` <tr>
-           
-          <td>${sortedItems[count].fleaToTraderProfit}</td> 
-          <td>${sortedItems[count].sellingSource}</td> 
-          <td>${sortedItems[count].fleaPrice}</td> 
-          <td>${sortedItems[count].traderSellPrice}</td> 
-          <td>${sortedItems[count].name}</td> 
-          <td><img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}" height="50" /></td>
-          </tr>
-           `
+      
+          newHtml += `
+            <tr>
+              <td>${sortedItems[count].fleaToTraderProfit}</td>
+              <td>${sortedItems[count].sellingSource}</td>
+              <td>${sortedItems[count].fleaPrice}</td>
+              <td>${sortedItems[count].traderSellPrice}</td>
+              <td>${sortedItems[count].name}</td>
+              <td><img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}" height="50" /></td>
+            </tr>
+          `;
+      
           count++;
         }
+      
+        output.querySelector(".item-table").insertAdjacentHTML("beforeend", newHtml);
 
-        output.innerHTML = html;
 
         html += `</table>`
       });
-
       html += `</table>`
-      
-
 ;
 
       output.innerHTML = html;
