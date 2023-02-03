@@ -1,0 +1,10 @@
+.item-container {
+    display: flex;
+    justify-content: center;
+  }
+
+td {
+    text-transform: uppercase;
+    text-align: center;
+    margin: 10px;
+}

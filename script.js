@@ -1,5 +1,7 @@
 let tarkovItems;
-
+const output = document.getElementById("output");
+let row = 0;
+let html = "";
 window.onload = function () {
   fetch('https://api.tarkov.dev/graphql', {
     method: 'POST',
@@ -61,8 +63,34 @@ window.onload = function () {
         return parseFloat(b.fleaToTraderProfit) - parseFloat(a.fleaToTraderProfit);
       });
 
-      console.log(sortedItems);
+let count = 0;
 
+html += `<table class="item-table">
+<tr>
+  <th>PROFIT</th>
+  <th>SELL TO</th>
+  <th>FLEA PRICE</th>
+  <th>SELL PRICE</th>
+  <th>NAME</th>
+  <th>IMAGE</th>
+</tr>`
+      for (let i = 0; i < 10; i++) {
+        html += `<tr>
+          <td>${sortedItems[count].fleaToTraderProfit}</td>
+          <td>${sortedItems[count].sellingSource}</td>
+          <td>${sortedItems[count].fleaPrice}</td>
+          <td>${sortedItems[count].traderSellPrice}</td>
+          <td>${sortedItems[count].name}</td>
+          <td><img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}"  height="50" /></td>
+        </tr>`
+            
+        count++   
+
+
+      } 
+      html += `</table>`;
+
+output.innerHTML = html;
     })
     .catch(error => console.log(error));
 
