@@ -28,64 +28,40 @@ window.onload = function () {
   })
     .then(r => r.json())
     .then(data => {
-      tarkovItems = data.data.items;
-      console.log(tarkovItems);
+        tarkovItems = data.data.items;
 
-
-      tarkovItems.forEach(item => {
-        item.sellFor = item.sellFor.filter(sellForItem => sellForItem.source !== 'fleaMarket');
-      });
-
-      console.log(tarkovItems.sort((a, b) => {
-        return b.lastLowPrice - a.lastLowPrice;
-      }));
-
-      tarkovItems.forEach(item => {
-
-        let itemName = item.name;
-        let highestPriceRUB = 0;
-        let lowestPriceRUB = item.lastLowPrice;
-        let averagePriceRUB = item.avg24hPrice;
-        let picture = item.image8xLink;
-        let highestSource;
-        let profit = 0;
-
-        for (let i = 0; i < item.sellFor.length; i++) {
-          if (item.sellFor[i].priceRUB > highestPriceRUB) {
-            highestPriceRUB = item.sellFor[i].priceRUB;
-            highestSource = item.sellFor[i].source;
+        const profitability = tarkovItems.map( (item) => {
+          const sellTo = item.sellFor?.filter((sell) => sell.source !== "fleaMarket");
+          if ( !item || !sellTo || !item.lastLowPrice || !item.sellFor) {
+              return  {
+                  name: item?.name,
+                  sellingSource: 'N/A',
+                  basePrice: '0',
+                  fleaPrice: '0',
+                  fleaToTraderProfit: '0',
+                  traderSellPrice: '0',
+                  imageUrl: ''
+              }
           }
-        }
-        profit = highestPriceRUB - lowestPriceRUB;
-        item.profit = profit;
-      });
-      tarkovItems.sort((a, b) => b.profit - a.profit);
-      
-
-      const filteredItems = tarkovItems.filter(item => item.profit >= 100);
-      
-      filteredItems.forEach(item => {
-
-        let itemName = item.name;
-        let highestPriceRUB = 0;
-        let lowestPriceRUB = item.lastLowPrice;
-        let averagePriceRUB = item.avg24hPrice;
-        let picture = item.image8xLink;
-        let highestSource;
-        let profit = item.profit;
-
-        for (let i = 0; i < item.sellFor.length; i++) {
-          if (item.sellFor[i].priceRUB > highestPriceRUB) {
-            highestPriceRUB = item.sellFor[i].priceRUB;
-            highestSource = item.sellFor[i].source;
+          const biggestTraderSellValue = Math.max(...sellTo.map(sell => Number(sell.priceRUB)))
+          const profit = item.lastLowPrice ? biggestTraderSellValue - item.lastLowPrice: 0;
+          const trader = item.sellFor.find((seller) => seller.priceRUB === biggestTraderSellValue);
+          return {
+              name: item.name,
+              sellingSource: trader?.source,
+              basePrice: String(item.basePrice),
+              fleaPrice: String(item.lastLowPrice),
+              fleaToTraderProfit: String(profit),
+              traderSellPrice: String(biggestTraderSellValue),
+              imageUrl: item.image8xLink
           }
-        }
+      }).filter((item) => item.sellingSource !== 'N/A');
 
-      
-        if (highestPriceRUB && lowestPriceRUB && averagePriceRUB && picture) {
-        console.log("Profit: " + profit + " Name: " + itemName);
-        }
+      const sortedItems = profitability.sort(function(a, b) {
+        return parseFloat(b.fleaToTraderProfit) - parseFloat(a.fleaToTraderProfit);
       });
+
+      console.log(sortedItems);
 
     })
     .catch(error => console.log(error));
