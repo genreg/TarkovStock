@@ -65,7 +65,8 @@ window.onload = function () {
 
       let count = 0;
 
-      html += `<table class="item-table">
+      html += `
+      <table class="item-table">
 <tr>
   <th>PROFIT</th>
   <th>SELL TO</th>
@@ -82,7 +83,8 @@ window.onload = function () {
           <td>${sortedItems[count].traderSellPrice}</td>
           <td>${sortedItems[count].name}</td>
           <td><img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}"  height="50" /></td>
-        </tr>`
+          </tr>
+        `
 
         count++
 
@@ -92,28 +94,37 @@ window.onload = function () {
       const loadMoreButton = document.getElementById("load");
 
       loadMoreButton.addEventListener("click", function () {
+
+        
+        html += `
+        <table class="item-table">`
+        
         for (let i = 0; i < 10; i++) {
           if (count === sortedItems.length) {
             break;
           }
-          html += ` 
-          <tr> 
+          html += ` <tr>
+           
           <td>${sortedItems[count].fleaToTraderProfit}</td> 
           <td>${sortedItems[count].sellingSource}</td> 
           <td>${sortedItems[count].fleaPrice}</td> 
           <td>${sortedItems[count].traderSellPrice}</td> 
           <td>${sortedItems[count].name}</td> 
           <td><img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}" height="50" /></td>
-           </tr>;`
+          </tr>
+           `
           count++;
         }
+
         output.innerHTML = html;
+
+        html += `</table>`
       });
 
+      html += `</table>`
+      
 
-
-
-      html += `</table>`;
+;
 
       output.innerHTML = html;
 
