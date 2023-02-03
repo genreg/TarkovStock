@@ -68,14 +68,15 @@ let count = 0;
       for (let i = 0; i < 10; i++) {
         html += `
 
-        <div class="column">${sortedItems[count].fleaToTraderProfit}
+        <div class="item-container">
+           <div class="item">${sortedItems[count].fleaToTraderProfit}
         ${sortedItems[count].name}
         ${sortedItems[count].sellingSource}
         ${sortedItems[count].fleaPrice}
         ${sortedItems[count].traderSellPrice}
         <img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}"  width="100" height="100"/>
         
-        </div><br>`
+        </div></div><br>`
             
         count++   
 
