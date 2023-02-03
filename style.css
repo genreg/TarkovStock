@@ -18,6 +18,13 @@ tr {
 td {
   text-transform: uppercase;
   text-align: center;
-  border-top: 6px solid #9f8051;
+  border-top: 8px solid #9f8051;
   margin-top: 50px;
+  background: grey;
 }
+
+th{
+color:white;
+padding-bottom: 20px;
+}
+
