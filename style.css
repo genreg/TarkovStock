@@ -125,3 +125,10 @@ button {
   right: -150px;
   z-index: -1;
 }
+
+.sticky-img2 {
+  position: fixed;
+  top: 50px;
+  left: -150px;
+  z-index: -1;
+}
