@@ -1,3 +1,10 @@
+.item-container {
+    display: flex;
+    justify-content: center;
+  }
+
 .item {
     text-transform: uppercase;
+    text-align: center;
+    margin: 10px;
 }
