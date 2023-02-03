@@ -1,5 +1,6 @@
 html {
-
+  font-family: Century Gothic;
+  letter-spacing: 1px;
   background-color: #0b1413;
   background-image: linear-gradient(to bottom right, #0b1413, #424740);
 }
@@ -13,7 +14,7 @@ td, th {
 table {
   margin-left: auto;
   margin-right: auto;
-  border-spacing: 0px 30px ;
+  border-spacing: 0px 15px ;
 }
 
 table,
@@ -28,6 +29,7 @@ td {
   border-bottom: 4px solid #9f8051;
   padding: 20px 0px;
   background: #42483e;
+  color:white;
 }
 
 th{
