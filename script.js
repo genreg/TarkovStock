@@ -30,42 +30,42 @@ window.onload = function () {
   })
     .then(r => r.json())
     .then(data => {
-        tarkovItems = data.data.items;
+      tarkovItems = data.data.items;
 
-        const profitability = tarkovItems.map( (item) => {
-          const sellTo = item.sellFor?.filter((sell) => sell.source !== "fleaMarket");
-          if ( !item || !sellTo || !item.lastLowPrice || !item.sellFor) {
-              return  {
-                  name: item?.name,
-                  sellingSource: 'N/A',
-                  basePrice: '0',
-                  fleaPrice: '0',
-                  fleaToTraderProfit: '0',
-                  traderSellPrice: '0',
-                  imageUrl: ''
-              }
-          }
-          const biggestTraderSellValue = Math.max(...sellTo.map(sell => Number(sell.priceRUB)))
-          const profit = item.lastLowPrice ? biggestTraderSellValue - item.lastLowPrice: 0;
-          const trader = item.sellFor.find((seller) => seller.priceRUB === biggestTraderSellValue);
+      const profitability = tarkovItems.map((item) => {
+        const sellTo = item.sellFor?.filter((sell) => sell.source !== "fleaMarket");
+        if (!item || !sellTo || !item.lastLowPrice || !item.sellFor) {
           return {
-              name: item.name,
-              sellingSource: trader?.source,
-              basePrice: String(item.basePrice),
-              fleaPrice: String(item.lastLowPrice),
-              fleaToTraderProfit: String(profit),
-              traderSellPrice: String(biggestTraderSellValue),
-              imageUrl: item.image8xLink
+            name: item?.name,
+            sellingSource: 'N/A',
+            basePrice: '0',
+            fleaPrice: '0',
+            fleaToTraderProfit: '0',
+            traderSellPrice: '0',
+            imageUrl: ''
           }
+        }
+        const biggestTraderSellValue = Math.max(...sellTo.map(sell => Number(sell.priceRUB)))
+        const profit = item.lastLowPrice ? biggestTraderSellValue - item.lastLowPrice : 0;
+        const trader = item.sellFor.find((seller) => seller.priceRUB === biggestTraderSellValue);
+        return {
+          name: item.name,
+          sellingSource: trader?.source,
+          basePrice: String(item.basePrice),
+          fleaPrice: String(item.lastLowPrice),
+          fleaToTraderProfit: String(profit),
+          traderSellPrice: String(biggestTraderSellValue),
+          imageUrl: item.image8xLink
+        }
       }).filter((item) => item.sellingSource !== 'N/A');
 
-      const sortedItems = profitability.sort(function(a, b) {
+      const sortedItems = profitability.sort(function (a, b) {
         return parseFloat(b.fleaToTraderProfit) - parseFloat(a.fleaToTraderProfit);
       });
 
-let count = 0;
+      let count = 0;
 
-html += `<table class="item-table">
+      html += `<table class="item-table">
 <tr>
   <th>PROFIT</th>
   <th>SELL TO</th>
@@ -83,14 +83,28 @@ html += `<table class="item-table">
           <td>${sortedItems[count].name}</td>
           <td><img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}"  height="50" /></td>
         </tr>`
-            
-        count++   
+
+        count++
 
 
-      } 
+      }
+
+      const loadMoreButton = document.getElementById("load");
+
+      loadMoreButton.addEventListener("click", function () {
+        output.innerHTML = html;
+      });
+
+
+
+
       html += `</table>`;
 
-output.innerHTML = html;
+      output.innerHTML = html;
+
+
+
+
     })
     .catch(error => console.log(error));
 
