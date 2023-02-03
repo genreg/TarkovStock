@@ -70,6 +70,11 @@ let count = 0;
 
         <div class="column">${sortedItems[count].fleaToTraderProfit}
         ${sortedItems[count].name}
+        ${sortedItems[count].sellingSource}
+        ${sortedItems[count].fleaPrice}
+        ${sortedItems[count].traderSellPrice}
+        <img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}"  width="100" height="100"/>
+        
         </div><br>`
             
         count++   
