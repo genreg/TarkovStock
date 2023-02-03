@@ -92,6 +92,21 @@ window.onload = function () {
       const loadMoreButton = document.getElementById("load");
 
       loadMoreButton.addEventListener("click", function () {
+        for (let i = 0; i < 10; i++) {
+          if (count === sortedItems.length) {
+            break;
+          }
+          html += ` 
+          <tr> 
+          <td>${sortedItems[count].fleaToTraderProfit}</td> 
+          <td>${sortedItems[count].sellingSource}</td> 
+          <td>${sortedItems[count].fleaPrice}</td> 
+          <td>${sortedItems[count].traderSellPrice}</td> 
+          <td>${sortedItems[count].name}</td> 
+          <td><img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}" height="50" /></td>
+           </tr>;`
+          count++;
+        }
         output.innerHTML = html;
       });
 
