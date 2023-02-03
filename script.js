@@ -1,4 +1,6 @@
 let tarkovItems;
+const output = document.getElementById("output");
+
 
 window.onload = function () {
   fetch('https://api.tarkov.dev/graphql', {
@@ -61,7 +63,12 @@ window.onload = function () {
         return parseFloat(b.fleaToTraderProfit) - parseFloat(a.fleaToTraderProfit);
       });
 
-      console.log(sortedItems);
+
+      for (let i = 0; i < 5; i++) {
+        console.log(sortedItems[i].name);
+        console.log(sortedItems[i].fleaToTraderProfit);
+      } 
+
 
     })
     .catch(error => console.log(error));
