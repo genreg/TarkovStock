@@ -5,6 +5,10 @@ html {
   background-image: linear-gradient(to bottom right, #0b1413, #424740);
 }
 
+h2{
+  color: #FFF;
+}
+
 #menu {
 
 	color: #FFF;
@@ -85,6 +89,15 @@ color:white;
 padding-bottom: 20px;
 }
 
+
+.hcenter {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 40px;
+
+}
+
 .center {
   height: 100px;
   align-items: center;
@@ -104,4 +117,11 @@ button {
   font-size: 12px;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+.sticky-img {
+  position: fixed;
+  bottom: 100px;
+  right: 0;
+  z-index: -1;
 }
