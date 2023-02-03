@@ -4,22 +4,29 @@ html {
   background-image: linear-gradient(to bottom right, #0b1413, #424740);
 }
 
+td, th {
+  width: 200px;
+  display: table-cell;
+  justify-content: space-between;
+}
 
 table {
   margin-left: auto;
   margin-right: auto;
+  border-spacing: 0px 30px ;
 }
 
 table,
 tr {
-  padding: 15px;
+  padding: 60px;
 }
 
 td {
   text-transform: uppercase;
   text-align: center;
-  border-top: 8px solid #9f8051;
-  margin-top: 50px;
+  border-top: 4px solid #9f8051;
+  border-bottom: 4px solid #9f8051;
+  padding: 20px 0px;
   background: grey;
 }
 
