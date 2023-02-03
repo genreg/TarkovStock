@@ -19,7 +19,7 @@ table {
 
 table,
 tr {
-  padding: 60px;
+  padding: 0px 60px;
 }
 
 td {
@@ -36,4 +36,13 @@ th{
 color:white;
 padding-bottom: 20px;
 }
+
+.center {
+  height: 100px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+}
+
 
