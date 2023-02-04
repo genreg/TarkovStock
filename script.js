@@ -1,11 +1,16 @@
 let tarkovItems;
 const output = document.getElementById("output");
+
+//makes more rows when you click load more items
 let row = 0;
 let html = "";
 
 
 
 window.onload = function () {
+
+
+  //loads TARKOV API
   fetch('https://api.tarkov.dev/graphql', {
     method: 'POST',
     headers: {
@@ -13,6 +18,7 @@ window.onload = function () {
       'Accept': 'application/json',
     },
     body: JSON.stringify({
+      //loads items
       query: `{
       items {
           id
@@ -33,9 +39,13 @@ window.onload = function () {
   })
     .then(r => r.json())
     .then(data => {
+
+      //shortening data
       tarkovItems = data.data.items;
 
       const profitability = tarkovItems.map((item) => {
+
+        //removing fleamarket
         const sellTo = item.sellFor?.filter((sell) => sell.source !== "fleaMarket");
         if (!item || !sellTo || !item.lastLowPrice || !item.sellFor) {
           return {
@@ -48,8 +58,14 @@ window.onload = function () {
             imageUrl: ''
           }
         }
+
+        //filtering biggest trade value from traders
         const biggestTraderSellValue = Math.max(...sellTo.map(sell => Number(sell.priceRUB)))
+
+        //profit calculation
         const profit = item.lastLowPrice ? biggestTraderSellValue - item.lastLowPrice : 0;
+
+        //shortening and finding trader value
         const trader = item.sellFor.find((seller) => seller.priceRUB === biggestTraderSellValue);
         return {
           name: item.name,
@@ -62,12 +78,14 @@ window.onload = function () {
         }
       }).filter((item) => item.sellingSource !== 'N/A');
 
+      //sorting highest to lowest
       const sortedItems = profitability.sort(function (a, b) {
         return parseFloat(b.fleaToTraderProfit) - parseFloat(a.fleaToTraderProfit);
       });
 
       let count = 0;
 
+      //printing html
       let html = `
       <table class="item-table">
         <tr>
@@ -104,10 +122,13 @@ window.onload = function () {
       const output = document.getElementById("output");
       output.innerHTML = html;
 
+      //load more button
       const loadMoreButton = document.getElementById("load");
 
+      //when you press load more
       loadMoreButton.addEventListener("click", function () {
         let newHtml = ``;
+
 
         for (let i = 0; i < 10; i++) {
           if (count === sortedItems.length) {
@@ -135,35 +156,33 @@ window.onload = function () {
       });
       html += `</table>`
 
-
+      //timer function
       function startTimer(duration, display) {
         var timer = duration, minutes, seconds;
         setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
-    
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-    
-            display.textContent = minutes + ":" + seconds;
-    
-            if (--timer < 0) {
-                timer = duration;
-            }
-    
-            // Store the remaining time in a cookie
-            document.cookie = "remaining_time=" + timer + ";max-age=" + (duration - timer);
+          minutes = parseInt(timer / 60, 10);
+          seconds = parseInt(timer % 60, 10);
+
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+
+          display.textContent = minutes + ":" + seconds;
+
+          if (--timer < 0) {
+            timer = duration;
+          }
+
+          //store the remaining time in a cookie
+          document.cookie = "remaining_time=" + timer + ";max-age=" + (duration - timer);
         }, 1000);
       }
-    
-
-        var display = document.querySelector('#timer');
-    
-        // Check if there is a remaining time stored in a cookie
-        var remaining_time = parseInt(document.cookie.replace(/(?:(?:^|.*;\s*)remaining_time\s*\=\s*([^;]*).*$)|^.*$/, "$1"), 10) || 300;
-        startTimer(remaining_time, display);
 
 
+      var display = document.querySelector('#timer');
+
+      //check if there is a remaining time stored in a cookie
+      var remaining_time = parseInt(document.cookie.replace(/(?:(?:^|.*;\s*)remaining_time\s*\=\s*([^;]*).*$)|^.*$/, "$1"), 10) || 300;
+      startTimer(remaining_time, display);
 
     })
     .catch(error => console.log(error));
