@@ -10,7 +10,6 @@ h2{
 }
 
 #menu {
-
 	color: #FFF;
 	height: 45px;
 	padding-left: 18px;
@@ -89,6 +88,14 @@ color:white;
 padding-bottom: 20px;
 }
 
+.timer{
+  align-items: right;
+  display: flex;
+  justify-content: right;
+  padding-right: 100px;
+  padding-bottom: 50px;
+
+}
 
 .hcenter {
   align-items: center;

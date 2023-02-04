@@ -2,6 +2,9 @@ let tarkovItems;
 const output = document.getElementById("output");
 let row = 0;
 let html = "";
+
+
+
 window.onload = function () {
   fetch('https://api.tarkov.dev/graphql', {
     method: 'POST',
@@ -62,9 +65,9 @@ window.onload = function () {
       const sortedItems = profitability.sort(function (a, b) {
         return parseFloat(b.fleaToTraderProfit) - parseFloat(a.fleaToTraderProfit);
       });
-      
+
       let count = 0;
-      
+
       let html = `
       <table class="item-table">
         <tr>
@@ -75,12 +78,12 @@ window.onload = function () {
           <th>NAME</th>
           <th>IMAGE</th>
         </tr>`;
-      
+
       for (let i = 0; i < 10; i++) {
         if (count === sortedItems.length) {
           break;
         }
-      
+
         html += `
           <tr>
             <td>${sortedItems[count].fleaToTraderProfit}</td>
@@ -91,26 +94,26 @@ window.onload = function () {
             <td><img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}" height="50" /></td>
           </tr>
         `;
-      
+
         count++;
       }
-      
+
       html += `
       </table>`;
-      
+
       const output = document.getElementById("output");
       output.innerHTML = html;
-      
+
       const loadMoreButton = document.getElementById("load");
-      
+
       loadMoreButton.addEventListener("click", function () {
         let newHtml = ``;
-      
+
         for (let i = 0; i < 10; i++) {
           if (count === sortedItems.length) {
             break;
           }
-      
+
           newHtml += `
             <tr>
               <td>${sortedItems[count].fleaToTraderProfit}</td>
@@ -121,20 +124,44 @@ window.onload = function () {
               <td><img src="${sortedItems[count].imageUrl}" alt="${sortedItems[count].name}" height="50" /></td>
             </tr>
           `;
-      
+
           count++;
         }
-      
+
         output.querySelector(".item-table").insertAdjacentHTML("beforeend", newHtml);
 
 
         html += `</table>`
       });
       html += `</table>`
-;
 
-      output.innerHTML = html;
 
+      function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+    
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+    
+            display.textContent = minutes + ":" + seconds;
+    
+            if (--timer < 0) {
+                timer = duration;
+            }
+    
+            // Store the remaining time in a cookie
+            document.cookie = "remaining_time=" + timer + ";max-age=" + (duration - timer);
+        }, 1000);
+      }
+    
+
+        var display = document.querySelector('#timer');
+    
+        // Check if there is a remaining time stored in a cookie
+        var remaining_time = parseInt(document.cookie.replace(/(?:(?:^|.*;\s*)remaining_time\s*\=\s*([^;]*).*$)|^.*$/, "$1"), 10) || 300;
+        startTimer(remaining_time, display);
 
 
 
