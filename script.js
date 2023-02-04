@@ -139,29 +139,30 @@ window.onload = function () {
       function startTimer(duration, display) {
         var timer = duration, minutes, seconds;
         setInterval(function () {
-          minutes = parseInt(timer / 60, 10);
-          seconds = parseInt(timer % 60, 10);
-
-          minutes = minutes < 10 ? "0" + minutes : minutes;
-          seconds = seconds < 10 ? "0" + seconds : seconds;
-
-          display.textContent = minutes + ":" + seconds;
-
-          if (--timer < 0) {
-            timer = duration;
-          }
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+    
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+    
+            display.textContent = minutes + ":" + seconds;
+    
+            if (--timer < 0) {
+                timer = duration;
+            }
+    
+            // Store the remaining time in a cookie
+            document.cookie = "remaining_time=" + timer + ";max-age=" + (duration - timer);
         }, 1000);
       }
+    
 
+        var display = document.querySelector('#timer');
+    
+        // Check if there is a remaining time stored in a cookie
+        var remaining_time = parseInt(document.cookie.replace(/(?:(?:^|.*;\s*)remaining_time\s*\=\s*([^;]*).*$)|^.*$/, "$1"), 10) || 300;
+        startTimer(remaining_time, display);
 
-      var fiveMinutes = 60 * 5,
-
-        display = document.querySelector('#timer');
-
-
-      output.innerHTML = html;
-
-      startTimer(fiveMinutes, display);
 
 
     })
