@@ -1,13 +1,31 @@
 let tarkovItems;
+
+
 const output = document.getElementById("output");
+
+
 
 //makes more rows when you click load more items
 let row = 0;
 let html = "";
 
 
-
 window.onload = function () {
+
+
+  //added loading
+  const loadingHtml = `
+  <div class="center">
+    <div class="loading">
+      <div class="loader"></div>
+      <p>Loading...</p>
+    </div>
+    </div>
+  `;
+  output.innerHTML = loadingHtml;
+
+
+
 
   //loads TARKOV API
   fetch('https://api.tarkov.dev/graphql', {
