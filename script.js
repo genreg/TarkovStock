@@ -17,7 +17,6 @@ window.onload = function () {
   const loadingHtml = `
   <div class="center">
     <div class="loading">
-      <div class="loader"></div>
       <p>Loading...</p>
     </div>
     </div>
